@@ -1,4 +1,8 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import auth from "../../Firebase/Firebase.config";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -9,6 +13,8 @@ const SignUp = () => {
   const [success, setSuccess] = useState("");
   const [passwordType, setPasswordType] = useState(false);
   //   const [checkboxError, setCheckboxError] = useState(false);
+ 
+ 
   const handleSignUp = (e) => {
     e.preventDefault();
     // console.log("form subcomit");
@@ -16,7 +22,7 @@ const SignUp = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const checkbox = e.target.checkbox.checked;
-    console.log(name ,email, password, checkbox);
+    console.log(name, email, password, checkbox);
 
     // user inteface error
 
@@ -37,40 +43,37 @@ const SignUp = () => {
     setSuccess("");
     //creat user
     createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
+       .then((result) => {
         console.log(result.user);
-       
-if(result.user.emailVerified){
-  setSuccess("User creat successfully");
-}
-else{
-  setSuccess('Please verified your email')
-  alert('Please verified your email')
-}
 
-//update profile 
-updateProfile(result.user,{
-  displayName:name,
-  photoURL:'https://example.com/jane-q-user/profile.jpg'
-  
-})
-.then(()=>{
-  console.log('profile Updated');
-})
-.catch(error=>{
-  console.log(error.message)
-})
+        if (result.user.emailVerified) {
+          setSuccess("User creat successfully");
+        } else {
+          setSuccess("Please verified your email");
+          alert("Please verified your email");
+        }
 
-        // sent varification email 
+        //update profile
+        updateProfile(result.user,
+           {
+          displayName: name,
+          photoURL: "https://example.com/jane-q-user/profile.jpg",
+        })
+          .then(() => {
+            console.log("profile Updated");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+
+        // sent varification email
         sendEmailVerification(result.user)
-        .then(()=>{
-alert('Please chack your Email to verify')
-
-        })
-        .catch(error=>{
-console.log(error.message)
-        })
-
+          .then(() => {
+            alert("Please chack your Email to verify");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -129,10 +132,13 @@ console.log(error.message)
       </form>
       {signUpError && <p className="text-red-600 font-medium">{signUpError}</p>}
       {success && <p className="text-green-700 font-medium ">{success}</p>}
-      
-      <p className="mb-6 m-4">Already this websile ?please go to <Link className="text-orange-800" to={'/login'}>Log In</Link></p>
 
-      
+      <p className="mb-6 m-4">
+        Already this websile ?please go to{" "}
+        <Link className="text-orange-800" to={"/login"}>
+          Log In
+        </Link>
+      </p>
     </div>
   );
 };
