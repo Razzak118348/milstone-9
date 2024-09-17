@@ -17,6 +17,8 @@ import {
 } from "firebase/auth";
 import auth from "../../firebase.config";
 import { Link } from "react-router-dom";
+
+
 const SignUp = () => {
   const [passwordType, setPasswordType] = useState(false);
   //user interface error
@@ -50,14 +52,15 @@ const SignUp = () => {
       .then((result) => {
         console.log(result.user);
 
-//update profile : jokhon forgate password dibe thokhon password update korbe : eta 2 ta parameter ney
+        //update profile : jokhon forgate password dibe thokhon password update korbe : eta 2 ta parameter ney
 
-updateProfile(result.user,
-  {displayName:name,
- photoURL: "https://example.com/jane-q-user/profile.jpg"
-})
-.then(()=>console.log('profile update'))
-.catch(error=>setError(error.message))
+        updateProfile(result.user,
+          {
+            displayName: name,
+            photoURL: "https://example.com/jane-q-user/profile.jpg"
+          })
+          .then(() => console.log('profile update'))
+          .catch(error => setError(error.message))
 
         //sent email verification
         sendEmailVerification(result.user)

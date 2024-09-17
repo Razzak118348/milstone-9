@@ -13,8 +13,8 @@ const SignUp = () => {
   const [success, setSuccess] = useState("");
   const [passwordType, setPasswordType] = useState(false);
   //   const [checkboxError, setCheckboxError] = useState(false);
- 
- 
+
+
   const handleSignUp = (e) => {
     e.preventDefault();
     // console.log("form subcomit");
@@ -127,12 +127,10 @@ const SignUp = () => {
           </a>{" "}
         </label>
         <br />
-
         <button className="btn bg-pink-500 font-bold w-64"> Sign Up</button>
       </form>
       {signUpError && <p className="text-red-600 font-medium">{signUpError}</p>}
       {success && <p className="text-green-700 font-medium ">{success}</p>}
-
       <p className="mb-6 m-4">
         Already this websile ?please go to{" "}
         <Link className="text-orange-800" to={"/login"}>
